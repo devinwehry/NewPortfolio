@@ -36,10 +36,22 @@ p {
   font-size: 1rem;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  /* align-items:center; */
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+h3 {
+  margin-block: 0;
 }
 
 a {
@@ -127,16 +139,22 @@ header {
   position: sticky;
   top: 0;
   z-index: 9999;
+  display: flex;
+  justify-content: space-between;
+  /* align-items:center; */
+  border-bottom: solid rgba(128, 128, 128, 0.311) 1px;
 }
 
 header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 4rem;
 }
 
 #my-name {
-  font-size: 18px;
+  font-size: 28px;
+  font-weight: 600;
 }
 
 header .button-link {
@@ -167,9 +185,69 @@ nav a:not(.button-link) {
   .menu-toggle {
     display: inline-block;
     position: absolute;
-    top: 1.5rem;
+    top: 1rem;
     right: 2rem;
     z-index: 99999;
+
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 12px 2px;
+  }
+
+  /* set button span to pos relative */
+  .menu-toggle span {
+    position: relative;
+  }
+  /* create before & after pseudo elements */
+  .menu-toggle span::before,
+  .menu-toggle span::after {
+    position: absolute;
+    content: '';
+    left: 0;
+
+    transform: rotate(0deg);
+    transition: all 0.2s ease;
+  }
+  /* style menu lines */
+  .menu-toggle span,
+  .menu-toggle span::before,
+  .menu-toggle span::after {
+    display: inline-block;
+    width: 26px;
+    height: 2px;
+    background-color: white;
+  }
+  /* position top menu line */
+  .menu-toggle span::before {
+    margin-top: -8px;
+  }
+
+  /* position bottom menu line */
+  .menu-toggle span::after {
+    margin-top: 8px;
+  }
+
+  /* active */
+  /* hide button span */
+  nav.open .menu-toggle span {
+    background-color: transparent;
+  }
+
+  /* default position for before & after pseudo elements (overlapping in the center of the button) */
+  nav.open .menu-toggle span::before,
+  nav.open .menu-toggle span::after {
+    margin-top: 0;
+  }
+
+  /* rotate top menu line */
+  nav.open .menu-toggle span::before {
+    transform: rotate(45deg);
+  }
+
+  /* rotate bottom menu line */
+  nav.open .menu-toggle span::after {
+    transform: rotate(-45deg);
   }
   nav ul {
     display: none;
@@ -212,8 +290,59 @@ nav a:not(.button-link) {
 }
 
 h1 {
-  font-size: clamp(1.25rem, calc(0.9rem + 1.74vw), 2.25rem);
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+
   margin: 0;
+}
+h1 + p {
+  font-size: clamp(1.25rem, calc(0.9rem + 1.74vw), 2.25rem);
+}
+
+/* Animation  */
+
+.text-box {
+  /* border: solid red 1px; */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.text-content {
+  /* border: solid blue 1px; */
+  display: inline-block;
+  transform: translateY(120%);
+  /* animation: slideUp ease 1s;
+  animation-fill-mode: forwards; */
+}
+
+.contact:hover,
+.contact:focus {
+  animation: hueRotate ease 3s;
+  animation-iteration-count: 3;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes hueRotate {
+  0% {
+    background-color: var(--primary);
+  }
+  20% {
+    background-color: limegreen;
+  }
+  60% {
+    background-color: dodgerblue;
+  }
+
+  80% {
+    background-color: plum;
+  }
+
+  100% {
+    background-color: var(--primary);
+  }
 }
 
 /* SKILLS  */
@@ -277,9 +406,9 @@ h1 {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 8 px;
+  gap: 8px;
 }
-.repo-info ul [id^='language'] li {
+.repo-info ul[id^='language'] li {
   font-size: 12px;
   text-transform: uppercase;
   color: var(--blue);
@@ -342,7 +471,7 @@ h1 {
   aspect-ratio: 1.4;
   object-fit: cover;
 
-  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.25);
   border: solid white 1px;
   border-radius: 10px;
 }
@@ -352,9 +481,9 @@ h1 {
 }
 
 /* Selects every paragraph which has a <br /> tag immediately following */
-p:has(+ br) {
+/* p:has(+ br) {
   color: rgb(77, 77, 77);
-}
+} */
 
 /* pseudo element */
 
@@ -381,7 +510,7 @@ article ul {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 8 px;
+  gap: 8px;
 
   margin-bottom: 20px;
 }
